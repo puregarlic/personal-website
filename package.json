@@ -8,6 +8,7 @@
     "@rebass/emotion": "^3.0.0",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
+    "react-feather": "^1.1.5",
     "react-pose": "^4.0.4",
     "react-scripts": "2.1.3"
   },
