@@ -46,7 +46,7 @@ const ProjectCard = ({ title, link, image }) => (
       <Shade
         justifyContent="center"
         alignItems="center"
-        css={{ height: '200px', minWidth: '350px' }}
+        css={{ height: '250px', minWidth: '400px' }}
       >
         <Heading color="black" fontFamily="Inter UI" fontWeight={600} textAlign="center">
           <Highlight as="span">{title}</Highlight>
