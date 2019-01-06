@@ -1,14 +1,28 @@
 /** @jsx jsx */
+import posed from 'react-pose'
 import { jsx } from '@emotion/core'
 import { ChevronDown } from 'react-feather'
 import { Flex, Heading, Text } from '@rebass/emotion'
 
+import SocialIcons from './social'
 import Highlight from './highlight'
+import ProfilePicture from './profile'
+
+const Indicator = posed.div({
+  exit: { opacity: 0 },
+  enter: {
+    opacity: 1,
+    transition: {
+      duration: 1100,
+      flip: Infinity
+    }
+  }
+})
 
 const Header = () => (
   <Flex
     width={1}
-    css={{ height: '100vh' }}
+    css={{ height: '80vh' }}
     justifyContent="flex-end"
     flexDirection="column"
     bg="#dbff33"
@@ -21,7 +35,9 @@ const Header = () => (
       Nice to see you. My name is <Highlight>Graham Barber</Highlight>.
     </Text>
     <Flex width={1} justifyContent="center" my={4}>
-      <ChevronDown size={32} />
+      <Indicator initialPose="exit" pose="enter">
+        <ChevronDown size={40} />
+      </Indicator>
     </Flex>
   </Flex>
 )

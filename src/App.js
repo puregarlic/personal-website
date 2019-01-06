@@ -4,6 +4,7 @@ import { jsx, Global } from '@emotion/core'
 import { Flex, Heading, Box } from '@rebass/emotion'
 
 import Header from './components/header'
+import SocialIcons from './components/social'
 import ProjectCard from './components/project-card'
 
 import dune from './images/dune.png'
@@ -38,6 +39,7 @@ const App = () => {
           }
         }}
       />
+      <SocialIcons />
       <Header />
       <Box px={[4, 5, 5]} my={5}>
         <Heading fontFamily="Inter UI" fontSize={[5, 6, 90]}>
