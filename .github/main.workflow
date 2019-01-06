@@ -4,12 +4,12 @@ workflow "Test on push" {
 }
 
 action "Install dependencies" {
-  uses = "actions/npm@e7aaefe"
+  uses = "docker://culturehq/actions-yarn:latest"
   args = "install"
 }
 
 action "Run test command" {
-  uses = "actions/npm@e7aaefe"
+  uses = "docker://culturehq/actions-yarn:latest"
   args = "test"
   needs = "Install dependencies"
 }
