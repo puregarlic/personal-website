@@ -4,9 +4,7 @@ import { jsx } from '@emotion/core'
 import { ChevronDown } from 'react-feather'
 import { Flex, Heading, Text } from '@rebass/emotion'
 
-import SocialIcons from './social'
 import Highlight from './highlight'
-import ProfilePicture from './profile'
 
 const Indicator = posed.div({
   exit: { opacity: 0 },
