@@ -32,12 +32,12 @@ const socialLinks = [
   },
   {
     alt: 'LinkedIn',
-    link: 'https://www.linkedin.com/in/monochromicon/',
+    link: 'https://www.linkedin.com/in/graham-barber/',
     Icon: Linkedin
   },
   {
     alt: 'Resumé',
-    link: 'https://standardresume.co/grahambarber',
+    link: 'https://standardresume.co/r/grahambarber',
     Icon: Archive
   },
   {
