@@ -14,6 +14,7 @@ import {
 
 import Head from '../components/head'
 import Nav from '../components/nav'
+import IconButton from '../components/icon-button'
 
 const Home = () => (
   <div>
@@ -75,9 +76,9 @@ const Home = () => (
         </Box>
         <Box sx={{ gridArea: 'bio' }}>
           <Text mb={3}>
-            I'm a web developer, DevOps specialist, game developer, and
-            JavaScript enthusiast. Currently, I am pursuing an undergraduate
-            degree in business management from Oregon State University.
+            I'm a web developer, DevOps engineer, and JavaScript enthusiast.
+            Currently, I am pursuing an undergraduate degree in business
+            management from Oregon State University.
           </Text>
           <Text>
             My passions include improving development processes, development
@@ -85,107 +86,35 @@ const Home = () => (
           </Text>
         </Box>
         <Flex
-          flexDirection="row-reverse"
-          flexWrap="wrap-reverse"
           alignItems="flex-end"
-          sx={{ gridArea: 'links', gap: '1rem' }}
+          flexWrap="wrap-reverse"
+          flexDirection="row-reverse"
+          sx={{ gridArea: 'links' }}
         >
-          <Flex
-            m={1}
-            height="5rem"
-            width="5rem"
-            bg="#0f0f0f"
-            alignItems="center"
-            justifyContent="center"
-            color="white"
-            sx={{ borderRadius: '100%' }}
-          >
+          <IconButton href="https://twitter.com/puregarlic_">
             <Twitter size={32} />
-          </Flex>
-          <Flex
-            m={1}
-            height="5rem"
-            width="5rem"
-            bg="#0f0f0f"
-            alignItems="center"
-            justifyContent="center"
-            color="white"
-            sx={{ borderRadius: '100%' }}
-          >
+          </IconButton>
+          <IconButton href="https://github.com/puregarlic">
             <GitHub size={32} />
-          </Flex>
-          <Flex
-            m={1}
-            height="5rem"
-            width="5rem"
-            bg="#0f0f0f"
-            alignItems="center"
-            justifyContent="center"
-            color="white"
-            sx={{ borderRadius: '100%' }}
-          >
+          </IconButton>
+          <IconButton href="https://www.linkedin.com/in/graham-barber/">
             <Linkedin size={32} />
-          </Flex>
-          <Flex
-            m={1}
-            height="5rem"
-            width="5rem"
-            bg="#0f0f0f"
-            alignItems="center"
-            justifyContent="center"
-            color="white"
-            sx={{ borderRadius: '100%' }}
-          >
+          </IconButton>
+          <IconButton href="https://standardresume.co/r/grahambarber">
             <List size={32} />
-          </Flex>
-          <Flex
-            m={1}
-            height="5rem"
-            width="5rem"
-            bg="#0f0f0f"
-            alignItems="center"
-            justifyContent="center"
-            color="white"
-            sx={{ borderRadius: '100%' }}
-          >
+          </IconButton>
+          <IconButton>
             <BookOpen size={32} />
-          </Flex>
-          <Flex
-            m={1}
-            height="5rem"
-            width="5rem"
-            bg="#0f0f0f"
-            alignItems="center"
-            justifyContent="center"
-            color="white"
-            sx={{ borderRadius: '100%' }}
-          >
+          </IconButton>
+          <IconButton href="https://puregarlic.itch.io">
             <Monitor size={32} />
-          </Flex>
-          <Flex
-            m={1}
-            height="5rem"
-            width="5rem"
-            bg="#0f0f0f"
-            alignItems="center"
-            justifyContent="center"
-            color="white"
-            sx={{ borderRadius: '100%' }}
-          >
+          </IconButton>
+          <IconButton href="https://github.com/puregarlic/personal-website">
             <Code size={32} />
-          </Flex>
-          <Flex
-            m={1}
-            height="5rem"
-            width="5rem"
-            bg="#0f0f0f"
-            alignItems="center"
-            justifyContent="center"
-            color="white"
-            sx={{ borderRadius: '100%' }}
-          >
+          </IconButton>
+          <IconButton>
             <Sun size={32} />
-          </Flex>{' '}
+          </IconButton>
         </Flex>
       </Box>
     </Flex>
