@@ -1,7 +1,5 @@
 {
   "version": 2,
-  "builds": [
-    { "src": "./package.json", "use": "@now/static-build", "config": { "distDir": "build" } }
-  ],
+  "builds": [{ "src": "package.json", "use": "@now/next" }],
   "alias": ["graham.now.sh"]
 }
