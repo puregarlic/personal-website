@@ -1,27 +1,29 @@
 import { Flex, Link } from 'rebass'
 import { string, node, func } from 'prop-types'
+import useDarkMode from 'use-dark-mode'
 
 const IconButton = props => {
+  const { value } = useDarkMode(false)
+
   return (
-    <Flex
-      m={1}
-      height="5rem"
-      width="5rem"
-      bg="#0f0f0f"
-      alignItems="center"
-      justifyContent="center"
-      onClick={props.onClick}
-      sx={{ borderRadius: '100%' }}
+    <Link
+      color={value ? '#0f0f0f' : 'white'}
+      href={props.href}
+      target="_blank"
+      sx={{ textDecoration: 'none', lineHeight: 0 }}
     >
-      <Link
-        color="white"
-        href={props.href}
-        target="_blank"
-        sx={{ textDecoration: 'none', lineHeight: 0 }}
+      <Flex
+        height="4rem"
+        width="4rem"
+        bg={value ? 'white' : '#0f0f0f'}
+        alignItems="center"
+        justifyContent="center"
+        onClick={props.onClick}
+        sx={{ borderRadius: '100%' }}
       >
         {props.children}
-      </Link>
-    </Flex>
+      </Flex>
+    </Link>
   )
 }
 

@@ -39,12 +39,22 @@ const Head = props => (
       {`
         body {
           margin: 0;
-          font-size: 20px;
           font-family: 'Poppins', -apple-system, sans-serif;
+          font-size: 20px;
+          transition: 0.3s ease-in-out;
+        }
+
+        body.light-mode {
           color: #0f0f0f;
         }
 
+        body.dark-mode {
+          color: white;
+          background: #0f0f0f;
+        }
+
         ::selection {
+          color: #0f0f0f;
           background: rgb(219, 255, 51);
         }
       `}
