@@ -10,7 +10,12 @@ const IconButton = props => {
       color={value ? '#0f0f0f' : 'white'}
       href={props.href}
       target="_blank"
-      sx={{ textDecoration: 'none', lineHeight: 0 }}
+      sx={{
+        color: value ? '#0f0f0f' : 'white',
+        textDecoration: 'none',
+        lineHeight: 0,
+        transition: '0.2s ease-in-out'
+      }}
     >
       <Flex
         height="4rem"
@@ -19,7 +24,7 @@ const IconButton = props => {
         alignItems="center"
         justifyContent="center"
         onClick={props.onClick}
-        sx={{ borderRadius: '100%' }}
+        sx={{ borderRadius: '100%', transition: '0.2s ease-in-out' }}
       >
         {props.children}
       </Flex>

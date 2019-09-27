@@ -22,7 +22,8 @@ const Project = props => {
         sx={{
           borderStyle: 'solid',
           borderWidth: '4px',
-          borderColor: value ? 'white' : '#0f0f0f'
+          borderColor: value ? 'white' : '#0f0f0f',
+          transition: '0.2s ease-in-out'
         }}
       >
         <Text fontSize={1}>{props.name}</Text>
