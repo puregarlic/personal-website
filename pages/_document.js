@@ -36,6 +36,15 @@ class MyDocument extends Document {
                 color: #0f0f0f;
                 background: mediumspringgreen;
               }
+
+              body .__react_component_tooltip.tooltip {
+                background: mediumspringgreen;
+                color: black;
+              }
+
+              body .__react_component_tooltip.place-top.tooltip:after {
+                border-top-color: mediumspringgreen;
+              }
             `}
           </style>
         </Head>

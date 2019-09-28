@@ -14,6 +14,7 @@ import {
 } from 'react-feather'
 import styled from '@emotion/styled'
 import useDarkMode from 'use-dark-mode'
+import ReactTooltip from 'react-tooltip'
 
 import Head from '../components/head'
 import IconButton from '../components/icon-button'
@@ -104,6 +105,7 @@ const Home = () => {
   return (
     <div>
       <Head title="Graham Barber" />
+      <ReactTooltip className="tooltip" effect="solid" />
       <Flex
         width={1}
         minHeight="100vh"
@@ -143,35 +145,35 @@ const Home = () => {
             </Text>
           </Box>
           <Links sx={{ gridArea: 'links' }}>
-            <IconButton dark={value}>
+            <IconButton tip="Blog (Coming Soon)">
               <BookOpen size={32} />
             </IconButton>
             <IconButton
-              dark={value}
+              tip="Resumé"
               href="https://standardresume.co/r/grahambarber"
             >
               <List size={32} />
             </IconButton>
             <IconButton
-              dark={value}
+              tip="Website Source"
               href="https://github.com/puregarlic/personal-website"
             >
               <Code size={32} />
             </IconButton>
-            <IconButton dark={value} onClick={toggle}>
+            <IconButton tip="Toggle dark mode" onClick={toggle}>
               {value ? <Sun size={32} /> : <Moon size={32} />}
             </IconButton>
-            <IconButton dark={value} href="https://twitter.com/puregarlic_">
+            <IconButton tip="Twitter" href="https://twitter.com/puregarlic_">
               <Twitter size={32} />
             </IconButton>
-            <IconButton dark={value} href="https://github.com/puregarlic">
+            <IconButton tip="GitHub" href="https://github.com/puregarlic">
               <GitHub size={32} />
             </IconButton>
-            <IconButton dark={value} href="https://puregarlic.itch.io">
+            <IconButton tip="Itch" href="https://puregarlic.itch.io">
               <Monitor size={32} />
             </IconButton>
             <IconButton
-              dark={value}
+              tip="LinkedIn"
               href="https://www.linkedin.com/in/graham-barber/"
             >
               <Linkedin size={32} />

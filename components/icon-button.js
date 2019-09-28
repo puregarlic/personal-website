@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Flex, Link } from 'rebass'
-import { string, node, func, bool } from 'prop-types'
+import { string, node, func } from 'prop-types'
 import useDarkMode from 'use-dark-mode'
 import styled from '@emotion/styled'
 
@@ -28,15 +28,11 @@ const IconButtonBase = styled(Flex)`
 `
 
 const IconButton = props => {
-  const [hey, setHey] = useState(false)
-  useEffect(() => {
-    setHey(props.dark)
-  }, [props.dark])
-
   return (
     <Link
       href={props.href}
       target="_blank"
+      data-tip={props.tip}
       sx={{
         textDecoration: 'none',
         lineHeight: 0
@@ -57,7 +53,7 @@ IconButton.propTypes = {
   href: string,
   children: node,
   onClick: func,
-  dark: bool
+  tip: string
 }
 
 export default IconButton
