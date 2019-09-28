@@ -1,14 +1,18 @@
+import { useState, useEffect } from 'react'
 import { Flex, Link, Text } from 'rebass'
-import { string } from 'prop-types'
+import { string, bool } from 'prop-types'
 import useDarkMode from 'use-dark-mode'
 import { Link2 } from 'react-feather'
 
 const Project = props => {
-  const { value } = useDarkMode(false)
+  const [hey, setHey] = useState(false)
+  useEffect(() => {
+    setHey(props.dark)
+  }, [props.dark])
 
   return (
     <Link
-      color={value ? 'white' : '#0f0f0f'}
+      color={hey ? 'white' : '#0f0f0f'}
       href={props.href}
       target="_blank"
       sx={{ textDecoration: 'none', lineHeight: 0 }}
@@ -22,7 +26,7 @@ const Project = props => {
         sx={{
           borderStyle: 'solid',
           borderWidth: '4px',
-          borderColor: value ? 'white' : '#0f0f0f',
+          borderColor: hey ? 'white' : '#0f0f0f',
           transition: '0.2s ease-in-out'
         }}
       >
@@ -35,7 +39,8 @@ const Project = props => {
 
 Project.propTypes = {
   href: string,
-  name: string
+  name: string,
+  dark: bool
 }
 
 export default Project

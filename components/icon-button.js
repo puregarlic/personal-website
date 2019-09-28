@@ -1,17 +1,20 @@
+import { useState, useEffect } from 'react'
 import { Flex, Link } from 'rebass'
-import { string, node, func } from 'prop-types'
+import { string, node, func, bool } from 'prop-types'
 import useDarkMode from 'use-dark-mode'
 
 const IconButton = props => {
-  const { value } = useDarkMode(false)
+  const [hey, setHey] = useState(false)
+  useEffect(() => {
+    setHey(props.dark)
+  }, [props.dark])
 
   return (
     <Link
-      color={value ? '#0f0f0f' : 'white'}
+      color={hey ? '#0f0f0f' : 'white'}
       href={props.href}
       target="_blank"
       sx={{
-        color: value ? '#0f0f0f' : 'white',
         textDecoration: 'none',
         lineHeight: 0,
         transition: '0.2s ease-in-out'
@@ -20,7 +23,7 @@ const IconButton = props => {
       <Flex
         height="4rem"
         width="4rem"
-        bg={value ? 'white' : '#0f0f0f'}
+        bg={hey ? 'white' : '#0f0f0f'}
         alignItems="center"
         justifyContent="center"
         onClick={props.onClick}
@@ -35,7 +38,8 @@ const IconButton = props => {
 IconButton.propTypes = {
   href: string,
   children: node,
-  onClick: func
+  onClick: func,
+  dark: bool
 }
 
 export default IconButton
