@@ -34,15 +34,15 @@ class MyDocument extends Document {
 
               ::selection {
                 color: #0f0f0f;
-                background: rgb(219, 255, 51);
+                background: mediumspringgreen;
               }
             `}
           </style>
         </Head>
         <body>
           <Main />
-          <NextScript />
         </body>
+        <NextScript />
       </Html>
     )
   }
