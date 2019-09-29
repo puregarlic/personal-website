@@ -24,9 +24,8 @@ const HomeLayout = styled(Box)`
   padding: 4rem;
   border: 4px solid mediumspringgreen;
   width: 100vw;
-  height: 100vh;
+  height: 800px;
   max-width: 1440px;
-  max-height: 800px;
   display: grid;
   grid-template-areas:
     'name . budget'
@@ -101,7 +100,6 @@ const Links = styled(Box)`
 
 const Home = () => {
   const { value, toggle } = useDarkMode(false)
-
   return (
     <div>
       <Head title="Graham Barber" />
