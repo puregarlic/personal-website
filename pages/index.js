@@ -1,5 +1,4 @@
 import React from 'react'
-import { Flex, Box, Text, Heading } from 'rebass'
 import {
   Twitter,
   GitHub,
@@ -9,16 +8,16 @@ import {
   Code,
   Monitor,
   Sun,
-  Moon,
-  Link2
+  Moon
 } from 'react-feather'
 import styled from '@emotion/styled'
 import useDarkMode from 'use-dark-mode'
 import ReactTooltip from 'react-tooltip'
+import { Flex, Box, Text, Heading } from 'rebass'
 
 import Head from '../components/head'
-import IconButton from '../components/icon-button'
 import Project from '../components/project'
+import IconButton from '../components/icon-button'
 
 const HomeLayout = styled(Box)`
   padding: 4rem;
@@ -100,9 +99,13 @@ const Links = styled(Box)`
 
 const Home = () => {
   const { value, toggle } = useDarkMode(false)
+
   return (
     <div>
-      <Head title="Graham Barber" />
+      <Head
+        title="Graham Barber"
+        description="Links to Graham's GitHub, Itch, and social media"
+      />
       <ReactTooltip className="tooltip" effect="solid" />
       <Flex
         width={1}

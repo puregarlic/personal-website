@@ -1,9 +1,7 @@
-import { useState, useEffect } from 'react'
-import { Flex, Link, Text } from 'rebass'
-import { string, bool } from 'prop-types'
-import { Link2 } from 'react-feather'
-import { motion } from 'framer-motion'
 import styled from '@emotion/styled'
+import { Link2 } from 'react-feather'
+import { string, bool } from 'prop-types'
+import { Flex, Link, Text } from 'rebass'
 
 const ProjectBase = styled(Flex)`
   width: 100%;
@@ -28,30 +26,23 @@ const ProjectBase = styled(Flex)`
   }
 `
 
-const Project = props => {
-  const [hey, setHey] = useState(false)
-  useEffect(() => {
-    setHey(props.dark)
-  }, [props.dark])
-
-  return (
-    <Link
-      href={props.href}
-      target="_blank"
-      sx={{ textDecoration: 'none', lineHeight: 0 }}
+const Project = props => (
+  <Link
+    href={props.href}
+    target="_blank"
+    sx={{ textDecoration: 'none', lineHeight: 0 }}
+  >
+    <ProjectBase
+      mt={2}
+      p={3}
+      alignItems="center"
+      justifyContent="space-between"
     >
-      <ProjectBase
-        mt={2}
-        p={3}
-        alignItems="center"
-        justifyContent="space-between"
-      >
-        <Text fontSize={1}>{props.name}</Text>
-        <Link2 />
-      </ProjectBase>
-    </Link>
-  )
-}
+      <Text fontSize={1}>{props.name}</Text>
+      <Link2 />
+    </ProjectBase>
+  </Link>
+)
 
 Project.propTypes = {
   href: string,
