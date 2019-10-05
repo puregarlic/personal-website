@@ -185,8 +185,15 @@ const Home = ({ projects }) => {
   )
 }
 
-Home.getInitialProps = async ({ req, res }) => {
+Home.getInitialProps = async ({ res }) => {
   const result = await client.request(GET_PROJECT_BUDGET)
+
+  if (res) {
+    res.setHeader(
+      'Cache-Control',
+      's-maxage=600, stale-while-revalidate, max-age=0'
+    )
+  }
 
   return { projects: result.getProjectList.items }
 }
