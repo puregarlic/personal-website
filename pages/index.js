@@ -126,7 +126,11 @@ const Home = ({ projects }) => {
               Side Project Budget
             </Heading>
             {projects.map(project => (
-              <Project name={project.title} href={project.url} />
+              <Project
+                key={project.title}
+                name={project.title}
+                href={project.url}
+              />
             ))}
           </Box>
           <Box sx={{ gridArea: 'bio' }}>
