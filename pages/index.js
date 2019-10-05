@@ -18,6 +18,8 @@ import { Flex, Box, Text, Heading } from 'rebass'
 import Head from '../components/head'
 import Project from '../components/project'
 import IconButton from '../components/icon-button'
+import client from '../utils/gql-client'
+import GET_PROJECT_BUDGET from '../queries/projects'
 
 const HomeLayout = styled(Box)`
   padding: 4rem;
@@ -97,7 +99,7 @@ const Links = styled(Box)`
   }
 `
 
-const Home = () => {
+const Home = ({ projects }) => {
   const { value, toggle } = useDarkMode(false)
 
   return (
@@ -123,16 +125,9 @@ const Home = () => {
             >
               Side Project Budget
             </Heading>
-            <Project
-              name="Personal website"
-              href="https://graham.now.sh"
-              dark={value}
-            />
-            <Project
-              name="Round"
-              href="https://github.com/dotmap/round"
-              dark={value}
-            />
+            {projects.map(project => (
+              <Project name={project.title} href={project.url} />
+            ))}
           </Box>
           <Box sx={{ gridArea: 'bio' }}>
             <Text mb={3}>
@@ -184,6 +179,12 @@ const Home = () => {
       </Flex>
     </div>
   )
+}
+
+Home.getInitialProps = async ({ req, res }) => {
+  const result = await client.request(GET_PROJECT_BUDGET)
+
+  return { projects: result.getProjectList.items }
 }
 
 export default Home
