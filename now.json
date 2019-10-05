@@ -2,8 +2,10 @@
   "version": 2,
   "builds": [{ "src": "package.json", "use": "@now/next" }],
   "alias": ["graham.now.sh"],
-  "env": {
-    "TAKESHAPE_API_ENDPOINT": "@website-takeshape-endpoint",
-    "TAKESHAPE_ACCESS_TOKEN": "@website-takeshape-access-token"
+  "build": {
+    "env": {
+      "TAKESHAPE_API_ENDPOINT": "@website-takeshape-endpoint",
+      "TAKESHAPE_ACCESS_TOKEN": "@website-takeshape-access-token"
+    }
   }
 }
