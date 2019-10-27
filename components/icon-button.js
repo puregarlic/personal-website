@@ -28,6 +28,7 @@ const IconButtonBase = styled(Flex)`
 const IconButton = props => (
   <Link
     href={props.href}
+    rel={props.rel}
     target="_blank"
     data-tip={props.tip}
     sx={{
@@ -49,7 +50,8 @@ IconButton.propTypes = {
   href: string,
   children: node,
   onClick: func,
-  tip: string
+  tip: string,
+  rel: string
 }
 
 export default IconButton
