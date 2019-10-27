@@ -145,7 +145,11 @@ const Home = ({ projects }) => {
             </Text>
           </Box>
           <Links sx={{ gridArea: 'links' }}>
-            <IconButton tip="Blog (Coming Soon)">
+            <IconButton
+              rel="me"
+              tip="Mastadon"
+              href="https://jazz.af/@puregarlic"
+            >
               <BookOpen size={32} />
             </IconButton>
             <IconButton
