@@ -1,26 +1,46 @@
 {
-  "name": "create-next-example-app",
-  "scripts": {
-    "dev": "next",
-    "build": "next build",
-    "start": "next start"
-  },
+  "name": "personal-website",
+  "private": true,
+  "description": "My personal website, built on Gatsby",
+  "version": "0.1.0",
+  "author": "Graham Barber <grahammbarber@gmail.com>",
   "dependencies": {
-    "@emotion/core": "^10.0.17",
-    "@emotion/styled": "^10.0.17",
-    "dotenv": "^8.1.0",
-    "framer-motion": "^1.6.7",
-    "graphql": "^14.5.8",
-    "graphql-request": "^1.8.2",
-    "next": "^9.0.6",
-    "react": "^16.9.0",
-    "react-dom": "^16.9.0",
-    "react-feather": "^2.0.3",
-    "react-tooltip": "^3.11.1",
-    "rebass": "^4.0.6",
-    "use-dark-mode": "^2.3.1"
+    "gatsby": "^2.18.8",
+    "gatsby-image": "^2.2.34",
+    "gatsby-plugin-manifest": "^2.2.31",
+    "gatsby-plugin-offline": "^3.0.27",
+    "gatsby-plugin-react-helmet": "^3.1.16",
+    "gatsby-plugin-sharp": "^2.3.5",
+    "gatsby-source-filesystem": "^2.1.40",
+    "gatsby-transformer-sharp": "^2.3.7",
+    "prop-types": "^15.7.2",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "react-helmet": "^5.2.1"
   },
-  "engines": {
-    "node": "10.x"
+  "devDependencies": {
+    "prettier": "^1.19.1"
+  },
+  "keywords": [
+    "gatsby"
+  ],
+  "license": "MIT",
+  "scripts": {
+    "build": "gatsby build",
+    "develop": "gatsby develop",
+    "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
+    "start": "npm run develop",
+    "serve": "gatsby serve",
+    "clean": "gatsby clean",
+    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1",
+    "now-dev": "gatsby develop -p $PORT",
+    "now-build": "gatsby build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/puregarlic/personal-website/issues"
+  },
+  "bugs": {
+    "url": "https://github.com/puregarlic/personal-website/issues"
   }
 }
