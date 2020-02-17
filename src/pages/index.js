@@ -12,8 +12,8 @@ import {
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 
-const IndexPage = ({ data }) => (
-  <Layout>
+const IndexPage = ({ data, location }) => (
+  <Layout pathname={location.pathname}>
     <SEO title="Home" />
     <Heading mb={3} sx={{ fontVariant: "small-caps" }}>
       Hi, my name is

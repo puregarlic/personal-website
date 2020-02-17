@@ -1,11 +1,11 @@
-import React, { useState } from "react"
+import React, { useState, lazy, Suspense } from "react"
 import PropTypes from "prop-types"
-import { useStaticQuery, graphql } from "gatsby"
 import styled from "@emotion/styled"
 import { css, Global, keyframes } from "@emotion/core"
-import ConfettiCanvas from "react-confetti-canvas"
 
 import Header from "./header"
+
+const ConfettiCanvas = lazy(() => import("react-confetti-canvas"))
 
 const wiggle = keyframes`
   from, to { transform: rotate(0); }
@@ -36,22 +36,14 @@ const ConfettiButton = styled.button`
   }
 `
 
-const Layout = ({ children }) => {
+const Layout = ({ children, pathname }) => {
+  const isSSR = typeof window === "undefined"
   const [showConfetti, setShowConfetti] = useState(false)
-  const data = useStaticQuery(graphql`
-    query SiteTitleQuery {
-      site {
-        siteMetadata {
-          title
-        }
-      }
-    }
-  `)
 
   return (
     <>
       <Global styles={confetti} />
-      <Header siteTitle={data.site.siteMetadata.title} />
+      <Header pathname={pathname} />
       <div
         style={{
           margin: `0 auto`,
@@ -70,7 +62,11 @@ const Layout = ({ children }) => {
           </ConfettiButton>
         </footer>
       </div>
-      {showConfetti && <ConfettiCanvas />}
+      {!isSSR && (
+        <Suspense fallback={<div />}>
+          {showConfetti && <ConfettiCanvas />}
+        </Suspense>
+      )}
     </>
   )
 }
