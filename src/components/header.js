@@ -1,12 +1,14 @@
 import { Link } from "gatsby"
 import PropTypes from "prop-types"
 import React from "react"
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
-const Header = ({ siteTitle }) => (
+const Header = () => (
   <header
     style={{
-      background: `rebeccapurple`,
-      marginBottom: `1.45rem`,
+      marginBottom: `2rem`,
+      minHeight: 64,
     }}
   >
     <div
@@ -16,17 +18,19 @@ const Header = ({ siteTitle }) => (
         padding: `1.45rem 1.0875rem`,
       }}
     >
-      <h1 style={{ margin: 0 }}>
+      {window.location.pathname !== "/" && (
         <Link
           to="/"
           style={{
-            color: `white`,
+            fontSize: "16px",
+            color: `#333`,
+            fontWeight: 900,
             textDecoration: `none`,
           }}
         >
-          {siteTitle}
+          <FontAwesomeIcon icon={faArrowLeft} /> Back to Home
         </Link>
-      </h1>
+      )}
     </div>
   </header>
 )
