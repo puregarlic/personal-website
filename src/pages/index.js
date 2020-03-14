@@ -9,7 +9,7 @@ const IndexPage = ({ data, location }) => (
   <Layout pathname={location.pathname}>
     <SEO title="Home" />
     <Heading mb={3} sx={{ fontVariant: "small-caps" }}>
-      Hi, my name is
+      Hello, my name is
     </Heading>
     <Heading fontSize={[8]} fontWeight={900} mb={4}>
       Graham Barber
@@ -20,12 +20,13 @@ const IndexPage = ({ data, location }) => (
     <Box px={3}>
       <Text mb={3}>
         I'm a web developer, DevOps engineer, and JavaScript enthusiast
-        dedicated to creating delightful experiences—for customers, developers,
+        dedicated to creating delightful experiences for customers, developers,
         and businesspeople alike.
       </Text>
       <Text mb={3}>
-        My passions include cutting-edge web technology, workflow automation,
-        and mechanical keyboards.
+        My passions include staying up-to-date with cutting-edge web technology,
+        automating workflows, and customizing mechanical keyboards. I also enjoy
+        public speaking and creating mental catalogs of just about anything.
       </Text>
     </Box>
     {data.projects.nodes.length > 0 && (
