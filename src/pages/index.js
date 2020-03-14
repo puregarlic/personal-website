@@ -45,6 +45,43 @@ const IndexPage = ({ data, location }) => (
         </Flex>
       </>
     )}
+    <Heading mt={5} mb={4}>
+      Education
+    </Heading>
+    <Flex p={4} mb={4} bg="text" flexWrap="wrap" sx={{ borderRadius: 3 }}>
+      <Heading width={[1, 2 / 3]} fontSize={3} mb={[2, 3]} color="background">
+        BS in Management <span style={{ fontWeight: 400 }}>in Progress</span>
+      </Heading>
+      <Text
+        mb={[3, 0]}
+        width={[1, 1 / 3]}
+        textAlign={["left", "right"]}
+        lineHeight={1}
+        fontSize={2}
+        color="background"
+      >
+        June 2020
+      </Text>
+      <Text width={[2 / 3]} color="background" fontSize={2} lineHeight={1}>
+        Oregon State University
+      </Text>
+      <Text
+        width={[1 / 3]}
+        textAlign={["left", "right"]}
+        color="background"
+        fontSize={2}
+        lineHeight={1}
+      >
+        Corvallis, OR
+      </Text>
+    </Flex>
+    <Text px={3} mb={6}>
+      Why Management? As a self-taught web developer in high school, I wanted to
+      learn how to apply my expertise in a business context. The best products
+      are created when designers, developers, and businesspeople understand each
+      others' processes—so I went to school to discover how to facilitate that
+      communication.
+    </Text>
   </Layout>
 )
 
