@@ -1,7 +1,15 @@
 import React, { useState, lazy, Suspense } from "react"
 import PropTypes from "prop-types"
 import styled from "@emotion/styled"
+import { Flex, Link } from "rebass"
 import { css, Global, keyframes } from "@emotion/core"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import {
+  faGithubSquare,
+  faLinkedin,
+  faDev,
+  faTwitterSquare,
+} from "@fortawesome/free-brands-svg-icons"
 
 import Header from "./header"
 
@@ -54,6 +62,44 @@ const Layout = ({ children, pathname }) => {
       >
         <main>{children}</main>
         <footer style={{ width: "100%", textAlign: "center", fontWeight: 900 }}>
+          <Flex mb={3} width={1} justifyContent="center">
+            <Link
+              href="https://github.com/puregarlic"
+              variant="link.icon"
+              mr={3}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FontAwesomeIcon icon={faGithubSquare} size="2x" />
+            </Link>
+            <Link
+              href="https://dev.to/puregarlic"
+              variant="link.icon"
+              mr={3}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FontAwesomeIcon icon={faDev} size="2x" />
+            </Link>
+            <Link
+              href="https://twitter.com/puregarlic_"
+              variant="link.icon"
+              mr={3}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FontAwesomeIcon icon={faTwitterSquare} size="2x" />
+            </Link>
+            <Link
+              href="https://www.linkedin.com/in/graham-barber"
+              variant="link.icon"
+              mr={2}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FontAwesomeIcon icon={faLinkedin} size="2x" />
+            </Link>
+          </Flex>
           <p>© {new Date().getFullYear()} Graham Barber</p>
           <ConfettiButton onClick={() => setShowConfetti(!showConfetti)}>
             <span role="img" aria-label="party popper">
