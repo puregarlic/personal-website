@@ -1,13 +1,16 @@
 export default {
+  useColorSchemeMediaQuery: true,
   colors: {
     text: "#1f1f1f",
     background: "#fff",
     primary: "#6AFFC9",
+    secondary: "#d1ffee",
     modes: {
       dark: {
         text: "#fff",
-        background: "#0f0f0f",
-        primary: "#D98ED6",
+        background: "#1f1f1f",
+        primary: "#ff006e",
+        secondary: "#2e0014",
       },
     },
   },
@@ -33,6 +36,7 @@ export default {
       fontSize: 2,
       lineHeight: "body",
       textAlign: "justify",
+      transition: "0.2s",
     },
     text: {
       heading: {
