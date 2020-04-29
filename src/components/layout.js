@@ -72,12 +72,20 @@ const Layout = ({ children, pathname }) => {
         sx={{
           margin: `0 auto`,
           maxWidth: "70ch",
-          padding: `0px 1.0875rem 1.45rem`,
+          padding: `0 1em`,
           paddingTop: 0,
         }}
       >
         <main>{children}</main>
-        <footer sx={{ width: "100%", textAlign: "center", fontWeight: 900 }}>
+        <footer
+          sx={{
+            mt: [5, 6],
+            mb: 4,
+            width: "100%",
+            textAlign: "center",
+            fontWeight: 900,
+          }}
+        >
           <Flex mb={3} width={1} justifyContent="center">
             <Link
               href="https://github.com/puregarlic"

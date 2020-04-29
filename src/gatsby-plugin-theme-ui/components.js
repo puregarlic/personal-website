@@ -1,6 +1,7 @@
 import React from "react"
-import { Link } from "rebass"
+
+import { Link } from "../components/link"
 
 export default {
-  a: props => <Link {...props} target="_blank" rel="noopener noreferrer" />,
+  a: props => <Link {...props} />,
 }

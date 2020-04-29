@@ -1,16 +1,17 @@
 import React from "react"
 import { Link as GatsbyLink } from "gatsby"
 import { graphql } from "gatsby"
-import { Heading, Text, Link, Flex, Box } from "rebass"
+import { Heading, Text, Flex, Box, Link } from "rebass"
 
-import Layout from "../components/layout"
 import SEO from "../components/seo"
+import Layout from "../components/layout"
 import { pathToRoute } from "../utils/path-to-route"
+import { Link as OutboundLink } from "../components/link"
 
 const IndexPage = ({ data, location }) => (
   <Layout pathname={location.pathname}>
     <SEO title="Home" />
-    <Heading mb={[3, 0]}>Nice to see you, my name is</Heading>
+    <Heading mb={[3, 0]}>Nice to meet you, my name is</Heading>
     <Heading
       fontSize={[8]}
       fontWeight={900}
@@ -19,7 +20,7 @@ const IndexPage = ({ data, location }) => (
     >
       Graham Barber
     </Heading>
-    <Heading mt={5} mb={4}>
+    <Heading mt={5} mb={3}>
       About Me
     </Heading>
     <Box>
@@ -36,15 +37,13 @@ const IndexPage = ({ data, location }) => (
     </Box>
     {data.projects.nodes.length > 0 && (
       <>
-        <Heading mt={[5, 6]} mb={4}>
+        <Heading mt={[5, 6]} mb={3}>
           Projects
         </Heading>
-        <Flex flexWrap="wrap" px={4} mb={[5, 6]} as="ul">
+        <Flex flexWrap="wrap" px={4} as="ul">
           {data.projects.nodes.map(({ name, url }) => (
             <Box key={name} as="li" width={[1, 1 / 2]} mb={3}>
-              <Link href={url} target="_blank" rel="noopener noreferrer">
-                {name}
-              </Link>
+              <OutboundLink href={url}>{name}</OutboundLink>
             </Box>
           ))}
         </Flex>
@@ -52,11 +51,10 @@ const IndexPage = ({ data, location }) => (
     )}
     {data.posts.edges.length > 0 && (
       <>
-        <Heading mt={[5, 6]} mb={4}>
+        <Heading mt={[5, 6]} mb={3}>
           Writing
         </Heading>
         <Box
-          mb={6}
           sx={{
             "@media screen and (min-width: 50em)": {
               "& a:first-of-type:before": {
@@ -89,7 +87,7 @@ const IndexPage = ({ data, location }) => (
                 borderRadius: "0 9px 9px 0",
                 ":hover": {
                   transform: "translateX(1em)",
-                  background: "#d1ffee",
+                  bg: "secondary",
                 },
                 ":active": {
                   transform: "translateX(2em)",
