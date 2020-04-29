@@ -1,8 +1,8 @@
 export default {
   colors: {
-    text: "#333",
+    text: "#1f1f1f",
     background: "#fff",
-    primary: "#75D1C5",
+    primary: "#6AFFC9",
     modes: {
       dark: {
         text: "#fff",
@@ -22,23 +22,33 @@ export default {
     bold: 700,
   },
   lineHeights: {
-    body: 1.6,
-    heading: 0.9,
+    body: 2,
+    heading: 2,
   },
   styles: {
     root: {
       fontFamily: "body",
       color: "text",
       fontWeight: "body",
-      fontSize: 3,
+      fontSize: 2,
       lineHeight: "body",
       textAlign: "justify",
     },
     text: {
       heading: {
+        mt: 5,
         lineHeight: "heading",
         fontSize: 5,
       },
+    },
+    p: {
+      my: 4,
+    },
+    h2: {
+      mt: 5,
+    },
+    h3: {
+      mt: 5,
     },
   },
   buttons: {
@@ -49,10 +59,20 @@ export default {
   },
   variants: {
     link: {
-      color: "primary",
+      color: "text",
+      fontWeight: "bold",
+      textDecoration: "none",
+      transition: "0.2s",
+      background: "linear-gradient(to bottom, #6AFFC9 0%, #6AFFC9 100%)",
+      backgroundPosition: "0 100%",
+      backgroundRepeat: "repeat-x",
+      backgroundSize: "3px 3px",
+      ":hover": {
+        backgroundSize: "3px 50px",
+      },
       icon: {
         color: "text",
-        transition: "0.1s ease-in-out",
+        transition: "0.2s",
         ":hover": {
           color: "primary",
         },

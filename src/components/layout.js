@@ -1,4 +1,6 @@
-import React, { useState, lazy, Suspense } from "react"
+/** @jsx jsx */
+import { Fragment, useState, lazy, Suspense } from "react"
+import { jsx } from "theme-ui"
 import PropTypes from "prop-types"
 import styled from "@emotion/styled"
 import { Flex, Link } from "rebass"
@@ -21,7 +23,7 @@ const wiggle = keyframes`
   66% { transform: rotate(-8deg); }
 `
 
-const confetti = css`
+const styles = css`
   #confetti {
     z-index: -100;
     position: fixed;
@@ -29,6 +31,20 @@ const confetti = css`
     left: 0;
     width: 100vw;
     height: 100vh;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    letter-spacing: -0.03em;
+  }
+
+  ::selection {
+    background-color: #ff006e;
+    color: white;
   }
 `
 
@@ -49,19 +65,19 @@ const Layout = ({ children, pathname }) => {
   const [showConfetti, setShowConfetti] = useState(false)
 
   return (
-    <>
-      <Global styles={confetti} />
+    <Fragment>
+      <Global styles={styles} />
       <Header pathname={pathname} />
       <div
-        style={{
+        sx={{
           margin: `0 auto`,
-          maxWidth: "57ch",
+          maxWidth: "70ch",
           padding: `0px 1.0875rem 1.45rem`,
           paddingTop: 0,
         }}
       >
         <main>{children}</main>
-        <footer style={{ width: "100%", textAlign: "center", fontWeight: 900 }}>
+        <footer sx={{ width: "100%", textAlign: "center", fontWeight: 900 }}>
           <Flex mb={3} width={1} justifyContent="center">
             <Link
               href="https://github.com/puregarlic"
@@ -73,15 +89,6 @@ const Layout = ({ children, pathname }) => {
               <FontAwesomeIcon icon={faGithubSquare} size="2x" />
             </Link>
             <Link
-              href="https://dev.to/puregarlic"
-              variant="link.icon"
-              mr={3}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <FontAwesomeIcon icon={faDev} size="2x" />
-            </Link>
-            <Link
               href="https://twitter.com/puregarlic_"
               variant="link.icon"
               mr={3}
@@ -89,6 +96,15 @@ const Layout = ({ children, pathname }) => {
               rel="noopener noreferrer"
             >
               <FontAwesomeIcon icon={faTwitterSquare} size="2x" />
+            </Link>
+            <Link
+              href="https://dev.to/puregarlic"
+              variant="link.icon"
+              mr={3}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FontAwesomeIcon icon={faDev} size="2x" />
             </Link>
             <Link
               href="https://www.linkedin.com/in/graham-barber"
@@ -113,7 +129,7 @@ const Layout = ({ children, pathname }) => {
           {showConfetti && <ConfettiCanvas />}
         </Suspense>
       )}
-    </>
+    </Fragment>
   )
 }
 

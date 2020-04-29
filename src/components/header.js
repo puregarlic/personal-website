@@ -1,17 +1,18 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import { Link } from "gatsby"
-import React from "react"
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
 const Header = ({ pathname }) => (
   <header
-    style={{
+    sx={{
       marginBottom: `2rem`,
       minHeight: 64,
     }}
   >
     <div
-      style={{
+      sx={{
         margin: `0 auto`,
         maxWidth: 960,
         padding: `1.45rem 1.0875rem`,
@@ -20,14 +21,15 @@ const Header = ({ pathname }) => (
       {pathname !== "/" && (
         <Link
           to="/"
-          style={{
+          sx={{
             fontSize: "16px",
             color: `#333`,
             fontWeight: 900,
             textDecoration: `none`,
           }}
         >
-          <FontAwesomeIcon icon={faArrowLeft} /> Back to Home
+          <FontAwesomeIcon icon={faArrowLeft} sx={{ marginRight: 2 }} /> Back to
+          Home
         </Link>
       )}
     </div>
