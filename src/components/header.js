@@ -3,11 +3,12 @@ import { jsx } from "theme-ui"
 import { Link } from "gatsby"
 import { Button } from "rebass"
 import { useThemeUI } from "theme-ui"
+import { Global } from "@emotion/core"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faArrowLeft, faSun, faMoon } from "@fortawesome/free-solid-svg-icons"
 
-const Header = ({ pathname }) => {
-  const { colorMode, setColorMode } = useThemeUI()
+const Header = ({ showHomeLink }) => {
+  const { theme, colorMode, setColorMode } = useThemeUI()
 
   function toggleTheme() {
     switch (colorMode) {
@@ -28,6 +29,14 @@ const Header = ({ pathname }) => {
         justifyContent: "center",
       }}
     >
+      <Global
+        styles={{
+          "::selection": {
+            backgroundColor: theme.colors.highlight,
+            color: theme.colors.background,
+          },
+        }}
+      />
       <div
         sx={{
           display: "flex",
@@ -59,7 +68,7 @@ const Header = ({ pathname }) => {
             sx={{ display: "block" }}
           />
         </Button>
-        {pathname !== "/" && (
+        {showHomeLink && (
           <Link
             to="/"
             sx={{

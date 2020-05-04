@@ -25,16 +25,11 @@ module.exports = {
     {
       resolve: `gatsby-plugin-mdx`,
       options: {
+        remarkPlugins: [require("remark-slug")],
         extensions: [`.mdx`, `.md`],
         defaultLayouts: {
           default: require.resolve("./src/components/layout.js"),
         },
-      },
-    },
-    {
-      resolve: `gatsby-plugin-page-creator`,
-      options: {
-        path: `${__dirname}/data`,
       },
     },
     {

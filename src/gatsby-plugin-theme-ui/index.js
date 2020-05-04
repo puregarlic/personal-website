@@ -4,13 +4,15 @@ export default {
     text: "#1f1f1f",
     background: "#fff",
     primary: "#6AFFC9",
-    secondary: "#d1ffee",
+    muted: "#d1ffee",
+    highlight: "#ff006e",
     modes: {
       dark: {
         text: "#fff",
         background: "#1f1f1f",
         primary: "#ff006e",
-        secondary: "#2e0014",
+        muted: "#2e0014",
+        highlight: "#6AFFC9",
       },
     },
   },
@@ -35,7 +37,6 @@ export default {
       fontWeight: "body",
       fontSize: 2,
       lineHeight: "body",
-      textAlign: "justify",
       transition: "0.2s",
     },
     text: {
@@ -43,16 +44,27 @@ export default {
         mt: 5,
         lineHeight: "heading",
         fontSize: 5,
+        letterSpacing: "-0.03em",
       },
     },
     p: {
       my: 4,
+      textAlign: "justify",
+    },
+    h1: {
+      fontSize: 6,
+      textAlign: "left",
+      lineHeight: 1.2,
+      fontWeight: 900,
+      letterSpacing: "-0.03em",
     },
     h2: {
       mt: 5,
+      letterSpacing: "-0.03em",
     },
     h3: {
       mt: 5,
+      letterSpacing: "-0.03em",
     },
   },
   buttons: {

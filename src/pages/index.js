@@ -6,10 +6,10 @@ import { Heading, Text, Flex, Box, Link } from "rebass"
 import SEO from "../components/seo"
 import Layout from "../components/layout"
 import { pathToRoute } from "../utils/path-to-route"
-import { Link as OutboundLink } from "../components/link"
+import OutboundLink from "../components/link"
 
 const IndexPage = ({ data, location }) => (
-  <Layout pathname={location.pathname}>
+  <Layout>
     <SEO title="Home" />
     <Heading mb={[3, 0]}>Nice to meet you, my name is</Heading>
     <Heading
@@ -87,7 +87,7 @@ const IndexPage = ({ data, location }) => (
                 borderRadius: "0 9px 9px 0",
                 ":hover": {
                   transform: "translateX(1em)",
-                  bg: "secondary",
+                  bg: "muted",
                 },
                 ":active": {
                   transform: "translateX(2em)",
