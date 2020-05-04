@@ -30,6 +30,7 @@ export default {
     body: 2,
     heading: 2,
   },
+  breakpoints: ["834px", "1440px", "1920"],
   styles: {
     root: {
       fontFamily: "body",

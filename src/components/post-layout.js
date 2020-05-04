@@ -11,9 +11,13 @@ import TableOfContents from "./table-of-contents"
 
 const PostGrid = styled.main`
   display: grid;
+  grid-template-areas: ". title ." ". toc ." ". content .";
   grid-template-columns: 1fr minmax(auto, 70ch) 1fr;
-  grid-template-areas: "toc content .";
-  gap: 48px;
+  gap: 0 48px;
+
+  @media screen and (min-width: 1440px) {
+    grid-template-areas: ". title ." "toc content .";
+  }
 `
 
 export default function PostLayout({ data: { mdx } }) {
@@ -25,13 +29,17 @@ export default function PostLayout({ data: { mdx } }) {
       />
       <Header showHomeLink />
       <PostGrid>
-        <Flex as="aside" justifyContent="flex-end" sx={{ gridArea: "toc" }}>
+        <Heading fontSize={6} fontWeight={900} sx={{ gridArea: "title" }}>
+          {mdx.frontmatter.title}
+        </Heading>
+        <Flex
+          as="aside"
+          justifyContent={["flex-start", null, "flex-end"]}
+          sx={{ gridArea: "toc" }}
+        >
           <TableOfContents items={mdx.tableOfContents.items} />
         </Flex>
         <Box as="article" sx={{ gridArea: "content" }}>
-          <Heading fontSize={6} fontWeight={900}>
-            {mdx.frontmatter.title}
-          </Heading>
           <MDXRenderer>{mdx.body}</MDXRenderer>
         </Box>
       </PostGrid>

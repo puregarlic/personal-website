@@ -37,7 +37,7 @@ function TableOfContents({ items }) {
     <TOCSubList
       sx={{
         width: 240,
-        marginTop: 48,
+        marginTop: 32,
         padding: 0,
         position: "sticky",
         top: 48,
