@@ -1,5 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
+import { Heading } from "rebass"
 import PropTypes from "prop-types"
 import styled from "@emotion/styled"
 
@@ -7,12 +8,12 @@ import Link from "./link"
 
 const TOCSubList = styled.ul`
   list-style-type: none;
-  padding-left: 24px;
+  padding-left: 16px;
 `
 
 function TableOfContentsLink({ url, title, items }) {
   return (
-    <li>
+    <li sx={{ lineHeight: 1, mb: 3 }}>
       <Link external={false} href={url}>
         {title}
       </Link>
@@ -44,6 +45,7 @@ function TableOfContents({ items }) {
         height: "fit-content",
       }}
     >
+      <Heading mb={3}>Table of Contents</Heading>
       {items.map(item => (
         <TableOfContentsLink
           key={item.url}

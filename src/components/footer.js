@@ -1,7 +1,8 @@
 /** @jsx jsx */
 import styled from "@emotion/styled"
+import { jsx, useThemeUI } from "theme-ui"
 import { Box, Flex, Link } from "rebass"
-import { jsx, css, Global, keyframes } from "@emotion/core"
+import { css, Global, keyframes } from "@emotion/core"
 import { Fragment, Suspense, lazy, useState } from "react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import {
@@ -43,11 +44,20 @@ const ConfettiButton = styled.button`
 `
 
 export default function Footer() {
+  const { theme } = useThemeUI()
   const isBrowser = typeof window !== "undefined"
   const [showConfetti, setShowConfetti] = useState(false)
 
   return (
     <Fragment>
+      <Global
+        styles={{
+          "::selection": {
+            backgroundColor: theme.colors.highlight,
+            color: theme.colors.background,
+          },
+        }}
+      />
       <Global styles={confettiStyles} />
       <Box
         as="footer"

@@ -4,15 +4,19 @@ export default {
     text: "#1f1f1f",
     background: "#fff",
     primary: "#6AFFC9",
-    muted: "#d1ffee",
+    secondary: "#4e4cd9",
+    muted: "#e3fff5",
     highlight: "#ff006e",
+    danger: "#ff3030",
     modes: {
       dark: {
         text: "#fff",
         background: "#1f1f1f",
         primary: "#ff006e",
+        secondary: "#8317fc",
         muted: "#2e0014",
         highlight: "#6AFFC9",
+        danger: "#ff3030",
       },
     },
   },
@@ -51,6 +55,12 @@ export default {
     p: {
       my: 4,
       textAlign: "justify",
+    },
+    inlineCode: {
+      bg: "muted",
+      p: 1,
+      fontWeight: 600,
+      borderRadius: "9px",
     },
     h1: {
       fontSize: 6,
