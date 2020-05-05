@@ -25,7 +25,10 @@ module.exports = {
     {
       resolve: `gatsby-plugin-mdx`,
       options: {
-        remarkPlugins: [require("remark-slug")],
+        remarkPlugins: [
+          require("remark-slug"),
+          require("remark-gemoji-to-emoji"),
+        ],
         extensions: [`.mdx`, `.md`],
         defaultLayouts: {
           default: require.resolve("./src/components/layout.js"),
