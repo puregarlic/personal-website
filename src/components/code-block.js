@@ -16,7 +16,7 @@ export default function CodeBlock({ children, className, live, globals }) {
   if (live) {
     return (
       <div sx={{ my: 4 }}>
-        <LiveProvider code={"\n" + children} theme={codeTheme} scope={globals}>
+        <LiveProvider code={children.trim()} theme={codeTheme} scope={globals}>
           <LivePreview
             Component={Box}
             p={4}
@@ -55,7 +55,7 @@ export default function CodeBlock({ children, className, live, globals }) {
     <Highlight
       {...defaultProps}
       theme={codeTheme}
-      code={"\n" + children}
+      code={children.trim()}
       language={language}
     >
       {({ className, style, tokens, getLineProps, getTokenProps }) => (
