@@ -18,7 +18,7 @@ export default function Link(props) {
   if (internal) {
     return (
       <GatsbyLink
-        sx={{ backgroundImage, ...theme.variants.link, ...sx }}
+        sx={{ ...theme.variants.link, backgroundImage, ...sx }}
         {...rest}
       >
         {children}
