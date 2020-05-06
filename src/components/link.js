@@ -13,14 +13,16 @@ export default function Link(props) {
       : theme.colors.primary
   const backgroundImage = `linear-gradient(to bottom, ${bgColor} 0%, ${bgColor} 100%)`
 
-  const { internal = false, sx, ...rest } = props
+  const { internal = false, sx, children, ...rest } = props
 
   if (internal) {
     return (
       <GatsbyLink
         sx={{ backgroundImage, ...theme.variants.link, ...sx }}
         {...rest}
-      />
+      >
+        {children}
+      </GatsbyLink>
     )
   }
 
@@ -30,7 +32,9 @@ export default function Link(props) {
       target="_blank"
       rel="noopener noreferrer"
       {...rest}
-    />
+    >
+      {children}
+    </LinkBase>
   )
 }
 
