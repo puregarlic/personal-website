@@ -9,6 +9,7 @@ import Link from "../components/link"
 import Layout from "../components/layout"
 import OutboundLink from "../components/link"
 import PostLink from "../components/post-link"
+import NewsletterSignup from "../components/newsletter-signup"
 
 const IndexPage = ({ data, location }) => (
   <Layout showLink={false}>
@@ -76,7 +77,7 @@ const IndexPage = ({ data, location }) => (
           </Link>
         </Flex>
         <Box
-          mb={3}
+          mb={[5, 6]}
           sx={{
             "@media screen and (min-width: 50em)": {
               "& a:first-of-type:before": {
@@ -110,6 +111,12 @@ const IndexPage = ({ data, location }) => (
         </Box>
       </>
     )}
+    <Heading mb={3}>Newsletter</Heading>
+    <Text mb={3} textAlign="justify">
+      Sign up for my newsletter to get updates from my blog (plus some extra
+      commentary) delivered straight to your inbox.
+    </Text>
+    <NewsletterSignup />
   </Layout>
 )
 
