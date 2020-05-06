@@ -44,7 +44,10 @@ export default function BlogPage({ data, location }) {
 
 export const postQuery = graphql`
   query {
-    posts: allMdx(sort: { fields: frontmatter___publishedAt, order: DESC }) {
+    posts: allMdx(
+      filter: { fields: { type: { eq: "post" } } }
+      sort: { fields: frontmatter___publishedAt, order: DESC }
+    ) {
       edges {
         node {
           id

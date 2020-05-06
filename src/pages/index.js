@@ -7,7 +7,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import SEO from "../components/seo"
 import Link from "../components/link"
 import Layout from "../components/layout"
-import OutboundLink from "../components/link"
 import PostLink from "../components/post-link"
 import NewsletterSignup from "../components/newsletter-signup"
 
@@ -46,7 +45,27 @@ const IndexPage = ({ data, location }) => (
         <Flex flexWrap="wrap" px={4} as="ul">
           {data.projects.nodes.map(({ name, url }) => (
             <Box key={name} as="li" width={[1, 1 / 2]} mb={3}>
-              <OutboundLink href={url}>{name}</OutboundLink>
+              <Link href={url}>{name}</Link>
+            </Box>
+          ))}
+        </Flex>
+      </>
+    )}
+    {data.decks.edges.length > 0 && (
+      <>
+        <Heading mt={[5, 6]} mb={3}>
+          Talks and Slide Decks
+        </Heading>
+        <Text mb={3} textAlign="justify">
+          These are a little buggy in Dark Mode. I strongly recommend changing
+          to light mode before clicking these links.
+        </Text>
+        <Flex flexWrap="wrap" px={4} as="ul">
+          {data.decks.edges.map(({ node: { id, title, slug } }) => (
+            <Box key={id} as="li" width={[1]} mb={3}>
+              <Link internal to={slug}>
+                {title}
+              </Link>
             </Box>
           ))}
         </Flex>
@@ -131,6 +150,7 @@ export const query = graphql`
       }
     }
     posts: allMdx(
+      filter: { fields: { type: { eq: "post" } } }
       sort: { fields: frontmatter___publishedAt, order: DESC }
       limit: 3
     ) {
@@ -147,6 +167,15 @@ export const query = graphql`
           wordCount {
             words
           }
+        }
+      }
+    }
+    decks: allDeck {
+      edges {
+        node {
+          id
+          title
+          slug
         }
       }
     }

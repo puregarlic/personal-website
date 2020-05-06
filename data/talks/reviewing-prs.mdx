@@ -1,0 +1,555 @@
+import { Flex, Box } from 'rebass'
+import { CodeSurfer } from 'code-surfer'
+import { Head, Appear, Notes } from 'mdx-deck'
+
+import base from '../../src/gatsby-plugin-theme-ui'
+
+export const theme = base
+
+<Head>
+  <title>Reviewing Pull Requests</title>
+</Head>
+
+# Reviewing PRs
+
+#### [Graham Barber](https://github.com/puregarlic)
+
+<Notes>
+
+- PRs are like checkpoints
+  - Keep unwanted problems out
+  - Easy when reviewers are blind
+  - Frustration or indifference
+
+</Notes>
+
+---
+
+<img width="1200px" src="https://media.giphy.com/media/R459x856IfF6w/giphy.gif" />
+
+<Notes>
+
+> Probably you, doing your first PR review
+
+</Notes>
+
+---
+
+# Agenda
+
+- Objectives
+- What to look for
+- CASS's recommended process
+
+<Notes>
+
+Applies to GitHub, GitLab, and Bitbucket
+
+Mainly applies to feat and fix PRs, but always keep them in mind
+
+</Notes>
+
+---
+
+## Objectives
+
+<ul>
+  <Appear>
+    <li>Ensure functionality</li>
+    <li>Maintain readable code</li>
+    <li>Prevent technical debt</li>
+    <li>Learn something new</li>
+  </Appear>
+</ul>
+
+---
+
+## Ensure Functionality
+
+<Notes>
+
+- Bare minimum
+- Tests help to a point
+- Above all, **run it**
+
+## Don't introduce broken code
+
+- Prevents rushed-fixes further down the line
+
+- Essential part of Continuous Integration
+
+</Notes>
+
+---
+
+## Maintain Readable Code
+
+<Notes>
+
+- If you don't know what it does, the next person
+  probably won't either
+- Don't let the writer sit next to you
+- Use a formatter
+
+## If you don't understand the code, it will bite
+
+- Documentation is a multivitamin, not a pain reliever
+
+</Notes>
+
+---
+
+## Prevent Technical Debt
+
+<Notes>
+
+- Refactoring *now* is good *late*
+- What's done now is not rushed later
+- Not everybody knows best or alternative
+  practices
+- Ask someone else!
+- Use a linter
+
+## Don't let anyone take the easy way out
+
+- Never be afraid to request changes
+
+</Notes>
+
+---
+
+## Learn Something New
+
+<Notes>
+
+- Exposure to diversity is important
+  - People solve problems differently
+  - People know things that you don't
+- Talk with the code writer _after_ looking
+  over everything
+- Do some research if you need it
+  - Ask an expert
+
+> Do your best to make sure you or the writer
+  learns something new
+
+- Helps you grow as a developer
+
+</Notes>
+
+---
+
+<CodeSurfer>
+
+```js title="Thinks to Look For"
+var arr = new Array(1, 2, 3, 4)
+var second_arr = new Array()
+
+second_arr.push(arr[0] + 1)
+second_arr.push(arr[1] + 1)
+second_arr.push(arr[2] + 1)
+second_arr.push(arr[3] + 1)
+
+const helol = 'Hello'
+let World = 'wordl'
+
+console.log('Debug: ' + helol + World)
+
+const token = process.env.TOKEN
+
+if (token) {
+  signIn(token)
+}
+
+const loggedIn = token
+	? signIn(token)
+	: checkSession()
+		? true
+		: false
+```
+
+```js title="Thinks to Look For" subtitle="Use of outdated language features" 1[1:3],2[1:3],12[13:38]
+var arr = new Array(1, 2, 3, 4)
+var second_arr = new Array()
+
+second_arr.push(arr[0] + 1)
+second_arr.push(arr[1] + 1)
+second_arr.push(arr[2] + 1)
+second_arr.push(arr[3] + 1)
+
+const helol = 'Hello'
+let World = 'wordl'
+
+console.log('Debug: ' + helol + World)
+
+const token = process.env.TOKEN
+
+if (token) {
+  signIn(token)
+}
+
+const loggedIn = token
+	? signIn(token)
+	: checkSession()
+		? true
+		: false
+```
+
+```js title="Thinks to Look For" subtitle="Not taking advantage of language features" 1[11:31],2[18:28]
+var arr = new Array(1, 2, 3, 4)
+var second_arr = new Array()
+
+second_arr.push(arr[0] + 1)
+second_arr.push(arr[1] + 1)
+second_arr.push(arr[2] + 1)
+second_arr.push(arr[3] + 1)
+
+const helol = 'Hello'
+let World = 'wordl'
+
+console.log('Debug: ' + helol + World)
+
+const token = process.env.TOKEN
+
+if (token) {
+  signIn(token)
+}
+
+const loggedIn = token
+	? signIn(token)
+	: checkSession()
+		? true
+		: false
+```
+
+```js title="Thinks to Look For" subtitle="Repetition where iteration should be used" 4:7
+var arr = new Array(1, 2, 3, 4)
+var second_arr = new Array()
+
+second_arr.push(arr[0] + 1)
+second_arr.push(arr[1] + 1)
+second_arr.push(arr[2] + 1)
+second_arr.push(arr[3] + 1)
+
+const helol = 'Hello'
+let World = 'wordl'
+
+console.log('Debug: ' + helol + World)
+
+const token = process.env.TOKEN
+
+if (token) {
+  signIn(token)
+}
+
+const loggedIn = token
+	? signIn(token)
+	: checkSession()
+		? true
+		: false
+```
+
+```js title="Thinks to Look For" subtitle="Inconsistent naming conventions" 1[4:6],2[4:13],9[7:11],10[5:9]
+var arr = new Array(1, 2, 3, 4)
+var second_arr = new Array()
+
+second_arr.push(arr[0] + 1)
+second_arr.push(arr[1] + 1)
+second_arr.push(arr[2] + 1)
+second_arr.push(arr[3] + 1)
+
+const helol = 'Hello'
+let World = 'wordl'
+
+console.log('Debug: ' + helol + World)
+
+const token = process.env.TOKEN
+
+if (token) {
+  signIn(token)
+}
+
+const loggedIn = token
+	? signIn(token)
+	: checkSession()
+		? true
+		: false
+```
+
+```js title="Thinks to Look For" subtitle="Misspelled variable names" 9[7:11],12[25:29]
+var arr = new Array(1, 2, 3, 4)
+var second_arr = new Array()
+
+second_arr.push(arr[0] + 1)
+second_arr.push(arr[1] + 1)
+second_arr.push(arr[2] + 1)
+second_arr.push(arr[3] + 1)
+
+const helol = 'Hello'
+let World = 'wordl'
+
+console.log('Debug: ' + helol + World)
+
+const token = process.env.TOKEN
+
+if (token) {
+  signIn(token)
+}
+
+const loggedIn = token
+	? signIn(token)
+	: checkSession()
+		? true
+		: false
+```
+
+```js title="Thinks to Look For" subtitle="Misspelled strings" 10[13:19]
+var arr = new Array(1, 2, 3, 4)
+var second_arr = new Array()
+
+second_arr.push(arr[0] + 1)
+second_arr.push(arr[1] + 1)
+second_arr.push(arr[2] + 1)
+second_arr.push(arr[3] + 1)
+
+const helol = 'Hello'
+let World = 'wordl'
+
+console.log('Debug: ' + helol + World)
+
+const token = process.env.TOKEN
+
+if (token) {
+  signIn(token)
+}
+
+const loggedIn = token
+	? signIn(token)
+	: checkSession()
+		? true
+		: false
+```
+
+```js title="Thinks to Look For" subtitle="Logging debug messages to the console" 12
+var arr = new Array(1, 2, 3, 4)
+var second_arr = new Array()
+
+second_arr.push(arr[0] + 1)
+second_arr.push(arr[1] + 1)
+second_arr.push(arr[2] + 1)
+second_arr.push(arr[3] + 1)
+
+const helol = 'Hello'
+let World = 'wordl'
+
+console.log('Debug: ' + helol + World)
+
+const token = process.env.TOKEN
+
+if (token) {
+  signIn(token)
+}
+
+const loggedIn = token
+	? signIn(token)
+	: checkSession()
+		? true
+		: false
+```
+
+```js title="Thinks to Look For" subtitle="Unhandled branching logic" 14:18
+var arr = new Array(1, 2, 3, 4)
+var second_arr = new Array()
+
+second_arr.push(arr[0] + 1)
+second_arr.push(arr[1] + 1)
+second_arr.push(arr[2] + 1)
+second_arr.push(arr[3] + 1)
+
+const helol = 'Hello'
+let World = 'wordl'
+
+console.log('Debug: ' + helol + World)
+
+const token = process.env.TOKEN
+
+if (token) {
+  signIn(token)
+}
+
+const loggedIn = token
+	? signIn(token)
+	: checkSession()
+		? true
+		: false
+```
+
+```js title="Thinks to Look For" subtitle="Nested ternaries" 20:24
+var arr = new Array(1, 2, 3, 4)
+var second_arr = new Array()
+
+second_arr.push(arr[0] + 1)
+second_arr.push(arr[1] + 1)
+second_arr.push(arr[2] + 1)
+second_arr.push(arr[3] + 1)
+
+const helol = 'Hello'
+let World = 'wordl'
+
+console.log('Debug: ' + helol + World)
+
+const token = process.env.TOKEN
+
+if (token) {
+  signIn(token)
+}
+
+const loggedIn = token
+	? signIn(token)
+	: checkSession()
+		? true
+		: false
+```
+
+</CodeSurfer>
+
+<Notes>
+
+I've prepared this nasty demo code
+
+... After walking through...
+
+- You might not know that these things are bad
+  - That's okay!
+- You might not know what to suggest instead
+  - Ask someone!
+  - Research!
+
+> Learn something new
+
+</Notes>
+
+---
+
+
+## Questions You Should Ask
+
+<Flex>
+
+<Box p={2} width={1/2}>
+
+### Yourself
+
+<ol>
+  <Appear>
+    <li>How does this compare to what I would do?</li>
+    <li>Do I understand what this code is doing?</li>
+    <li>Is this code relatively future-proof?</li>
+  </Appear>
+</ol>
+
+</Box>
+
+
+<Box p={2} width={1/2}>
+
+### Author
+
+<ol>
+  <Appear>
+    <li>Why did you implement ______ this way?</li>
+    <li>Do you think someone could modify your code without you explaining it?</li>
+    <li>What would you improve about your implementation?</li>
+  </Appear>
+</ol>
+
+</Box>
+
+</Flex>
+
+<Notes>
+
+Author questions are for _after_ reading through changes
+
+1. Analyze the implementation
+2. Is the code understandable to outsiders?
+3. Will it need to be edited in time?
+
+</Notes>
+
+---
+
+## Our Process
+
+1. **Read through the code**
+2. Verify that tests were written and are passing
+3. Verify that documentation was written
+4. _Run the code locally_
+5. **Approve or request changes**
+6. **Discuss with the code writer**
+
+<Notes>
+
+- What we've discussed happens in the bolded
+  steps
+
+- Running the code is time-consuming, but 
+  necessary
+
+- Steps 2 and 3 are trivial
+
+> The process requires thought and
+  consideration
+
+</Notes>
+
+---
+
+# _"~~lgtm~~"_
+
+<Notes>
+
+Do your best to avoid this
+
+When you approve changes,
+
+- Leave a useful message
+  - Compliment a decision/implementation
+
+- If you can't leave a compliment,
+  - You need to request changes
+  - Changes are trivial
+
+> Use your best judgement
+
+</Notes>
+
+---
+
+## Objectives
+
+- Ensure functionality
+- Maintain readable code
+- Prevent technical debt
+- Learn something new
+
+<Notes>
+
+Summarize
+
+</Notes>
+
+---
+
+# Questions
+
+---
+
+## Resources
+
+- [GitHub repository](https://github.com/puregarlic/reviewing-prs)
+- [CASS website](http://cass.oregonstate.edu)
+
+#### Recommended reading
+
+- [How to code review in a Pull Request](https://www.codacy.com/blog/how-to-code-review-in-a-pull-request/)

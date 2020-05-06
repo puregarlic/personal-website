@@ -1,7 +1,7 @@
 module.exports = {
   siteMetadata: {
     title: `Graham`,
-    description: `Graham's personal website`,
+    description: `A collection of Graham Barber's work from across the internet.`,
     author: `Graham Barber`,
   },
   plugins: [
@@ -13,7 +13,6 @@ module.exports = {
       },
     },
     `gatsby-plugin-emotion`,
-    `gatsby-plugin-theme-ui`,
     `gatsby-plugin-react-helmet`,
     {
       resolve: `gatsby-source-filesystem`,
@@ -28,11 +27,21 @@ module.exports = {
         remarkPlugins: [
           require("remark-slug"),
           require("remark-gemoji-to-emoji"),
+          require("remark-unwrap-images"),
         ],
+        gatsbyRemarkPlugins: ["gatsby-remark-import-code"],
         extensions: [`.mdx`, `.md`],
         defaultLayouts: {
           default: require.resolve("./src/components/layout.js"),
         },
+      },
+    },
+    {
+      resolve: "gatsby-theme-mdx-deck",
+      options: {
+        mdx: false,
+        contentPath: `${__dirname}/data/talks/`,
+        basePath: "/talks",
       },
     },
     {
@@ -49,6 +58,7 @@ module.exports = {
         offset: -48,
       },
     },
+    `gatsby-plugin-theme-ui`,
     {
       resolve: `gatsby-plugin-manifest`,
       options: {

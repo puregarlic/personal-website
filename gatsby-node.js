@@ -7,11 +7,26 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
   if (node.internal.type === "Mdx") {
     const slugFragment = createFilePath({ node, getNode })
 
-    createNodeField({
-      name: "slug",
-      node,
-      value: `blog${slugFragment}`,
-    })
+    const fileParent = getNode(node.parent)
+    if (fileParent.absolutePath.includes("/talks/")) {
+      createNodeField({
+        name: "type",
+        node,
+        value: "talk",
+      })
+    } else {
+      createNodeField({
+        name: "type",
+        node,
+        value: "post",
+      })
+
+      createNodeField({
+        name: "slug",
+        node,
+        value: `blog${slugFragment}`,
+      })
+    }
   }
 }
 
@@ -20,7 +35,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
 
   const results = await graphql(`
     query {
-      allMdx {
+      allMdx(filter: { fields: { type: { eq: "post" } } }) {
         edges {
           node {
             id
