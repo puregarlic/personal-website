@@ -7,7 +7,7 @@ export default {
     secondary: "#4e4cd9",
     muted: "#e3fff5",
     highlight: "#ff006e",
-    danger: "#ff3030",
+    danger: "rgb(255, 109, 109)",
     modes: {
       dark: {
         text: "#fff",
@@ -16,7 +16,7 @@ export default {
         secondary: "#8317fc",
         muted: "#2e0014",
         highlight: "#6AFFC9",
-        danger: "#ff3030",
+        danger: "rgb(255, 109, 109)",
       },
     },
   },
@@ -78,10 +78,41 @@ export default {
       letterSpacing: "-0.03em",
     },
   },
+  forms: {
+    label: {
+      fontWeight: 900,
+      fontSize: 1,
+    },
+    input: {
+      bg: "muted",
+      color: "text",
+      py: 2,
+      px: 3,
+      borderRadius: 0,
+      border: "none",
+      borderLeftStyle: "solid",
+      borderLeftWidth: "5px",
+      borderLeftColor: "primary",
+      transition: "0.2s",
+      "&:focus": {
+        bg: "background",
+        outline: "none",
+        borderColor: "highlight",
+      },
+    },
+  },
   buttons: {
-    icon: {
-      padding: 3,
-      height: "auto",
+    primary: {
+      fontWeight: 900,
+      color: "text",
+      bg: "primary",
+      borderRadius: 0,
+      px: 3,
+      py: 2,
+      transition: "0.2s",
+      "&:hover": {
+        bg: "muted",
+      },
     },
   },
   variants: {
