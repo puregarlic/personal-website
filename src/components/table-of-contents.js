@@ -5,8 +5,6 @@ import PropTypes from "prop-types"
 import styled from "@emotion/styled"
 import { AnchorLink } from "gatsby-plugin-anchor-links"
 
-import Link from "./link"
-
 const TOCSubList = styled.ul`
   list-style-type: none;
   padding-left: 16px;

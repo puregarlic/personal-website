@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { jsx, Box, Text, Label, Input, Button } from "theme-ui"
+import { jsx, Box, Label, Input, Button } from "theme-ui"
 
 export default function NewsletterSignup() {
   return (
