@@ -28,7 +28,7 @@ const PostGrid = styled.main`
   }
 `
 
-export default function PostLayout({ data: { mdx } }) {
+export default function PostLayout({ data: { mdx }, location }) {
   return (
     <Fragment>
       <SEO
@@ -41,7 +41,8 @@ export default function PostLayout({ data: { mdx } }) {
           sx={{ gridArea: "link" }}
         >
           <Link
-            to="/"
+            to={location?.state?.referredFrom?.path || "/"}
+            replace
             sx={{
               fontSize: "16px",
               color: "text",
@@ -50,7 +51,7 @@ export default function PostLayout({ data: { mdx } }) {
             }}
           >
             <FontAwesomeIcon icon={faArrowLeft} sx={{ marginRight: 2 }} /> Back
-            to Home
+            to {location?.state?.referredFrom?.page || "Home"}
           </Link>
         </Flex>
         <Flex
@@ -79,7 +80,10 @@ export default function PostLayout({ data: { mdx } }) {
           justifyContent={["flex-start", null, "flex-end"]}
           sx={{ gridArea: "toc" }}
         >
-          <TableOfContents items={mdx.tableOfContents.items} />
+          <TableOfContents
+            slug={mdx.fields.slug}
+            items={mdx.tableOfContents.items}
+          />
         </Flex>
         <Box as="article" sx={{ gridArea: "content" }}>
           <MDXRenderer>{mdx.body}</MDXRenderer>
@@ -95,6 +99,9 @@ export const pageQuery = graphql`
     mdx(id: { eq: $id }) {
       id
       body
+      fields {
+        slug
+      }
       frontmatter {
         title
         description

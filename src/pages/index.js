@@ -1,15 +1,17 @@
 import React from "react"
-import { Link as GatsbyLink } from "gatsby"
 import { graphql } from "gatsby"
-import { Heading, Text, Flex, Box, Link } from "rebass"
+import { Heading, Text, Flex, Box } from "rebass"
+import { faArrowRight } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
 import SEO from "../components/seo"
+import Link from "../components/link"
 import Layout from "../components/layout"
-import { pathToRoute } from "../utils/path-to-route"
 import OutboundLink from "../components/link"
+import PostLink from "../components/post-link"
 
 const IndexPage = ({ data, location }) => (
-  <Layout>
+  <Layout showLink={false}>
     <SEO title="Home" />
     <Heading mb={[3, 0]}>Nice to meet you, my name is</Heading>
     <Heading
@@ -24,12 +26,12 @@ const IndexPage = ({ data, location }) => (
       About Me
     </Heading>
     <Box>
-      <Text mb={3}>
-        I'm a web developer, DevOps engineer, and JavaScript enthusiast
+      <Text textAlign="justify" mb={3}>
+        I'm a web developer, DevOps engineer, and business management student
         dedicated to creating delightful experiences for customers, developers,
         and businesspeople alike.
       </Text>
-      <Text mb={3}>
+      <Text textAlign="justify" mb={3}>
         My hobbies include staying up-to-date with cutting-edge web technology,
         automating workflows, and customizing mechanical keyboards. I also enjoy
         public speaking and creating mental catalogs of just about anything.
@@ -51,10 +53,30 @@ const IndexPage = ({ data, location }) => (
     )}
     {data.posts.edges.length > 0 && (
       <>
-        <Heading mt={[5, 6]} mb={3}>
-          Writing
-        </Heading>
+        <Flex
+          mt={[5, 6]}
+          mb={3}
+          justifyContent="space-between"
+          alignItems="center"
+          flexWrap="wrap"
+        >
+          <Heading>Writing</Heading>
+          <Link
+            internal
+            to="/blog"
+            sx={{ lineHeight: 1.2 }}
+            state={{
+              referredFrom: {
+                page: "Home",
+                path: "/",
+              },
+            }}
+          >
+            See all posts <FontAwesomeIcon icon={faArrowRight} />
+          </Link>
+        </Flex>
         <Box
+          mb={3}
           sx={{
             "@media screen and (min-width: 50em)": {
               "& a:first-of-type:before": {
@@ -71,43 +93,19 @@ const IndexPage = ({ data, location }) => (
           }}
         >
           {data.posts.edges.map(({ node: post }) => (
-            <Link
+            <PostLink
               key={post.id}
-              as={GatsbyLink}
-              to={pathToRoute(post.fileAbsolutePath, "blog")}
-              mb={4}
-              p={3}
-              sx={{
-                background: "none",
-                display: "block",
-                fontWeight: 400,
-                borderLeftStyle: "solid",
-                borderLeftWidth: "5px",
-                borderLeftColor: "primary",
-                borderRadius: "0 9px 9px 0",
-                ":hover": {
-                  transform: "translateX(1em)",
-                  bg: "muted",
-                },
-                ":active": {
-                  transform: "translateX(2em)",
-                },
+              title={post.frontmatter.title}
+              description={post.frontmatter.description}
+              publishedAt={post.frontmatter.publishedAt}
+              timeToRead={post.timeToRead}
+              wordCount={post.wordCount.words}
+              fileAbsolutePath={post.fileAbsolutePath}
+              referredFrom={{
+                page: "Home",
+                path: "/",
               }}
-            >
-              <Heading fontSize={3} mb={1}>
-                {post.frontmatter.title}
-              </Heading>
-              <Flex
-                justifyContent="space-between"
-                flexWrap="wrap"
-                mb={2}
-                sx={{ fontFeatureSettings: '"tnum" on' }}
-              >
-                <Text color="grey">{`Published ${post.frontmatter.publishedAt}`}</Text>
-                <Text color="grey">{`${post.timeToRead} minute read | ${post.wordCount.words} words`}</Text>
-              </Flex>
-              <Text>{post.frontmatter.description}</Text>
-            </Link>
+            />
           ))}
         </Box>
       </>
@@ -125,7 +123,10 @@ export const query = graphql`
         url
       }
     }
-    posts: allMdx(sort: { fields: frontmatter___publishedAt, order: DESC }) {
+    posts: allMdx(
+      sort: { fields: frontmatter___publishedAt, order: DESC }
+      limit: 3
+    ) {
       edges {
         node {
           id

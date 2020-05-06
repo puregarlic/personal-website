@@ -44,6 +44,12 @@ module.exports = {
     },
     `gatsby-transformer-json`,
     {
+      resolve: `gatsby-plugin-anchor-links`,
+      options: {
+        offset: -48,
+      },
+    },
+    {
       resolve: `gatsby-plugin-manifest`,
       options: {
         name: `Graham Barber`,
