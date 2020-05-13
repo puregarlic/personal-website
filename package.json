@@ -24,6 +24,7 @@
     "gatsby-plugin-page-creator": "^2.1.45",
     "gatsby-plugin-react-helmet": "^3.1.22",
     "gatsby-plugin-theme-ui": "^0.3.0",
+    "gatsby-plugin-web-font-loader": "^1.0.4",
     "gatsby-remark-emoji": "0.0.3",
     "gatsby-remark-import-code": "^0.1.1",
     "gatsby-source-filesystem": "^2.1.48",

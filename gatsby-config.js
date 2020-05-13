@@ -6,6 +6,15 @@ module.exports = {
   },
   plugins: [
     {
+      resolve: `gatsby-plugin-web-font-loader`,
+      options: {
+        custom: {
+          families: ["Inter"],
+          urls: ["https://rsms.me/inter/inter.css"],
+        },
+      },
+    },
+    {
       resolve: `gatsby-plugin-google-analytics`,
       options: {
         trackingId: "UA-97707239-2",
