@@ -5,7 +5,7 @@ import { faArrowRight } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
 import SEO from "../components/seo"
-import Link from "../components/link"
+import { InternalLink, ExternalLink } from "../components/links"
 import Layout from "../components/layout"
 import PostLink from "../components/post-link"
 import NewsletterSignup from "../components/newsletter-signup"
@@ -45,7 +45,7 @@ const IndexPage = ({ data, location }) => (
         <Flex flexWrap="wrap" px={4} as="ul">
           {data.projects.nodes.map(({ name, url }) => (
             <Box key={name} as="li" width={[1, 1 / 2]} mb={3}>
-              <Link href={url}>{name}</Link>
+              <ExternalLink href={url}>{name}</ExternalLink>
             </Box>
           ))}
         </Flex>
@@ -63,9 +63,7 @@ const IndexPage = ({ data, location }) => (
         <Flex flexWrap="wrap" px={4} as="ul">
           {data.decks.edges.map(({ node: { id, title, slug } }) => (
             <Box key={id} as="li" width={[1]} mb={3}>
-              <Link internal to={slug}>
-                {title}
-              </Link>
+              <InternalLink to={slug}>{title}</InternalLink>
             </Box>
           ))}
         </Flex>
@@ -81,8 +79,7 @@ const IndexPage = ({ data, location }) => (
           flexWrap="wrap"
         >
           <Heading>Writing</Heading>
-          <Link
-            internal
+          <InternalLink
             to="/blog"
             sx={{ lineHeight: 1.2 }}
             state={{
@@ -93,7 +90,7 @@ const IndexPage = ({ data, location }) => (
             }}
           >
             See all posts <FontAwesomeIcon icon={faArrowRight} />
-          </Link>
+          </InternalLink>
         </Flex>
         <Box
           mb={[5, 6]}

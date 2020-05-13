@@ -1,9 +1,10 @@
 /** @jsx jsx */
-import { jsx, useThemeUI } from "theme-ui"
+import { jsx } from "theme-ui"
 import { Heading } from "rebass"
 import PropTypes from "prop-types"
 import styled from "@emotion/styled"
-import { AnchorLink } from "gatsby-plugin-anchor-links"
+
+import { AnchorLink } from "./links"
 
 const TOCSubList = styled.ul`
   list-style-type: none;
@@ -11,13 +12,9 @@ const TOCSubList = styled.ul`
 `
 
 function TableOfContentsLink({ url, title, items }) {
-  const { theme } = useThemeUI()
-
   return (
     <li sx={{ lineHeight: 1, mb: 3 }}>
-      <AnchorLink to={url} sx={{ ...theme.variants.link }}>
-        {title}
-      </AnchorLink>
+      <AnchorLink to={url}>{title}</AnchorLink>
       {items && (
         <TOCSubList>
           {items.map(item => (

@@ -2,8 +2,8 @@ import React from "react"
 import { Heading, Text } from "rebass"
 
 import SEO from "../../components/seo"
-import Link from "../../components/link"
 import Layout from "../../components/layout"
+import { InternalLink } from "../../components/links"
 
 export default function ConfirmSubscriptionPage() {
   return (
@@ -18,9 +18,7 @@ export default function ConfirmSubscriptionPage() {
       <Text>
         Thanks again for subscribing to my newsletter! If you're up for it,
         until the next time I send out an update, you can{" "}
-        <Link internal to="/">
-          poke around the rest of the site.
-        </Link>
+        <InternalLink to="/">poke around the rest of the site.</InternalLink>
       </Text>
     </Layout>
   )
