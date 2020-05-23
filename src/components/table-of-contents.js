@@ -7,18 +7,19 @@ import styled from "@emotion/styled"
 import { AnchorLink } from "./links"
 
 const TOCSubList = styled.ul`
+  padding-top: 16px;
   list-style-type: none;
   padding-left: 16px;
 `
 
-function TableOfContentsLink({ url, title, items }) {
+function TableOfContentsLink({ slug, url, title, items }) {
   return (
     <li sx={{ lineHeight: 1, mb: 3 }}>
-      <AnchorLink to={url}>{title}</AnchorLink>
+      <AnchorLink to={`/${slug}${url}`}>{title}</AnchorLink>
       {items && (
         <TOCSubList>
           {items.map(item => (
-            <TableOfContentsLink key={item.url} {...item} />
+            <TableOfContentsLink key={item.url} slug={slug} {...item} />
           ))}
         </TOCSubList>
       )}
@@ -47,7 +48,8 @@ function TableOfContents({ items, slug }) {
       {items.map(item => (
         <TableOfContentsLink
           key={item.url}
-          url={`/${slug}${item.url}`}
+          slug={slug}
+          url={item.url}
           title={item.title}
           items={item.items}
         />

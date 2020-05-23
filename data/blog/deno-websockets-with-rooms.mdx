@@ -1,0 +1,501 @@
+---
+title: "Building a Websocket Server with Rooms in Deno"
+description:
+  A more complex example of how to use to build a websocket server in Deno using
+  the standard library.
+publishedAt: "2020-05-23"
+---
+
+Since [Deno](https://deno.land) is the fresh JavaScript/TypeScript runtime on
+the scene, I thought I'd play around with it over the weekend to get it under my
+belt.
+
+My current project is a social dice-rolling app for tabletop RPG players, where
+each player can see the others' roll history in real time. I figured this was a
+great time to give both Websockets and Deno a try at the same time.
+
+In this article, I'll talk about my experience fixing the `ws` module server
+example to fit my requirements for a websocket server that supports multiple
+rooms with multiple clients. I assume that you have some TypeScript background,
+and a basic grasp on how Deno handles HTTP requests.
+
+## Getting started
+
+> If you don't already have Deno installed on your machine, you should take a
+> look at the
+> [installation instructions on their website](https://deno.land/#installation).
+> Once you have it installed, you'll be able to follow along.
+
+The first thing I did was a Google search for `deno websockets`. This quickly
+led me to the
+[`ws` module in the Deno Standard library.](https://deno.land/std/ws)
+
+Fortunately for us, `ws` has a pretty extensive example written out for both
+server and client usage. Since we're looking to build a server, we'll copy the
+server example and paste it in a file called `server.ts` on our machine.
+
+Here's the example pasted straight from the repository, if you don't want to go
+to the link:
+
+```ts
+import { serve } from "https://deno.land/std/http/server.ts"
+import {
+  acceptWebSocket,
+  isWebSocketCloseEvent,
+  isWebSocketPingEvent,
+} from "https://deno.land/std/ws/mod.ts"
+
+/** websocket echo server */
+const port = Deno.args[0] || "8080"
+console.log(`websocket server is running on :${port}`)
+for await (const req of serve(`:${port}`)) {
+  const { conn, r: bufReader, w: bufWriter, headers } = req
+
+  try {
+    const sock = await acceptWebSocket({
+      conn,
+      bufReader,
+      bufWriter,
+      headers,
+    })
+
+    console.log("socket connected!")
+
+    try {
+      for await (const ev of sock) {
+        if (typeof ev === "string") {
+          // text message
+          console.log("ws:Text", ev)
+          await sock.send(ev)
+        } else if (ev instanceof Uint8Array) {
+          // binary message
+          console.log("ws:Binary", ev)
+        } else if (isWebSocketPingEvent(ev)) {
+          const [, body] = ev
+          // ping
+          console.log("ws:Ping", body)
+        } else if (isWebSocketCloseEvent(ev)) {
+          // close
+          const { code, reason } = ev
+          console.log("ws:Close", code, reason)
+        }
+      }
+    } catch (err) {
+      console.error(`failed to receive frame: ${err}`)
+
+      if (!sock.isClosed) {
+        await sock.close(1000).catch(console.error)
+      }
+    }
+  } catch (err) {
+    console.error(`failed to accept websocket: ${err}`)
+    await req.respond({ status: 400 })
+  }
+}
+```
+
+With this example local, we can spin it up to test it out. You can use the
+following command:
+
+```sh
+deno run --allow-net server.ts
+```
+
+You should see `websocket server is running on :8080` appear in your console.
+This means that our server is ready to accept Websocket clients!
+
+## Testing our server
+
+To test out our Websocket server, I'm going to use the `wscat` package from NPM.
+If you have a preferred Websocket testing utility of your choice, it should work
+as well.
+
+If you have Node and NPM installed, you can run the following command to get the
+`wscat` package:
+
+```sh
+npm install -g wscat
+```
+
+Note the `-g` flag. This will install the package globally so we can use it as a
+command.
+
+Assuming that you still have `server.ts` running, let's open up a new terminal
+window and run the following command:
+
+```sh
+wscat -c ws://localhost:8080
+```
+
+In the output for `server.ts`, you should see `socket connected!` printed out.
+This means that we're all set to send and receive Websocket events! To test it
+out, just type anything you want into the `wscat` console and hit Enter on your
+keyboard:
+
+```
+$ wscat -c ws://localhost:8080
+connected (press CTRL+C to quit)
+> ping
+< ping
+> pong
+< pong
+```
+
+Now we're all set to fit this example to our needs!
+
+## Allowing multiple clients
+
+### The problem
+
+With the first `wscat` still connected, open up a new terminal and run
+`wscat -c ws://localhost:8080` again.
+
+You'll notice that the console hangs—that's because this server example is only
+configured to handle one client at a time! We'll need to support more than one
+connected client at a time to make our server more social.
+
+Why is this happening? Note that there are two `for await` declarations in the
+example; the first on line 11 and the second on line 25. The first one is
+great—it's what keeps the server alive while we wait for clients! The problem is
+that **the second awaited loop is holding up our main process.**
+
+In this example, our server is awaiting each connection in order to handle them,
+but then in the connection handler, it's awaiting each message on the client to
+handle them too. This second await means that the server never escapes to handle
+new connections, until the first connection disconnects!
+
+Fortunately, this is easy to fix.
+
+### The solution
+
+To get our server to handle multiple clients, all we need to do is move our
+message handling logic to a new asynchronous function. Let's make a new file
+called `handle_socket.ts` next to `server.ts`:
+
+```ts
+import {
+  WebSocket,
+  isWebSocketCloseEvent,
+  isWebSocketPingEvent,
+} from "https://deno.land/std/ws/mod.ts"
+
+export async function handleSocket(sock: WebSocket) {
+  try {
+    for await (const ev of sock) {
+      if (typeof ev === "string") {
+        // text message
+        console.log("ws:Text", ev)
+        await sock.send(ev)
+      } else if (ev instanceof Uint8Array) {
+        // binary message
+        console.log("ws:Binary", ev)
+      } else if (isWebSocketPingEvent(ev)) {
+        const [, body] = ev
+        // ping
+        console.log("ws:Ping", body)
+      } else if (isWebSocketCloseEvent(ev)) {
+        // close
+        const { code, reason } = ev
+        console.log("ws:Close", code, reason)
+      }
+    }
+  } catch (err) {
+    console.error(`failed to receive frame: ${err}`)
+
+    if (!sock.isClosed) {
+      await sock.close(1000).catch(console.error)
+    }
+  }
+}
+```
+
+Note that the contents of the `handleSocket` function are copied straight out of
+the example. We've just moved the second `for await` statement into a new async
+function.
+
+Now that we have this new module, we'll need to update `server.ts` to use it.
+Here's the new code:
+
+```ts
+import { serve } from "https://deno.land/std/http/server.ts"
+import { acceptWebSocket } from "https://deno.land/std/ws/mod.ts"
+
+import { handleSocket } from "./handle_socket.ts"
+
+/** websocket echo server */
+const port = Deno.args[0] || "8080"
+console.log(`websocket server is running on :${port}`)
+for await (const req of serve(`:${port}`)) {
+  const { conn, r: bufReader, w: bufWriter, headers } = req
+
+  try {
+    const sock = await acceptWebSocket({
+      conn,
+      bufReader,
+      bufWriter,
+      headers,
+    })
+
+    console.log("socket connected!")
+
+    handleSocket(sock)
+  } catch (err) {
+    console.error(`failed to accept websocket: ${err}`)
+    await req.respond({ status: 400 })
+  }
+}
+```
+
+_It is critical that we don't await `handleSocket`._ This makes it so that the
+main thread can continue handling requests, but the thread that `handleSocket`
+spawns (because it returns a Promise) can continue handling messages as long as
+the client remains connected.
+
+Now, try it out! Run `wscat -c ws://localhost:8080` in a couple of terminals and
+send some test messages! You should see that each client only sees their own
+messages echoed back at them.
+
+## Broadcasting messages
+
+Next, we'll want to make it so that messages we send to the server are sent to
+all connected clients. To do this, we'll need to use some iterable data
+structure that points to all connected clients. We'll use a `Set` for this
+purpose.
+
+First, we'll need to instantiate a root-level `Set` in `server.ts` that will
+hold references to all of our connected clients:
+
+```ts
+const clients = new Set([])
+```
+
+For type safety, we'll need to specify that `clients` is a `Set` of websockets.
+We'll do this by importing the `WebSocket` type from the `ws` module.
+
+```ts
+import { WebSocket, acceptWebSocket } from "https://deno.land/std/ws/mod.ts"
+
+// ...
+
+const clients = new Set<WebSocket>()
+```
+
+Next, we'll need to store each connected client in this `Set` to refer to them
+later. We'll do this before we call the `handleSocket` function:
+
+```ts
+try {
+  const sock = await acceptWebSocket({
+    conn,
+    bufReader,
+    bufWriter,
+    headers,
+  })
+
+  clients.add(sock)
+  handleSocket(sock)
+} catch (err) {
+  console.error(`failed to accept websocket: ${err}`)
+  await req.respond({ status: 400 })
+}
+```
+
+To make it so that we can broadcast to every client, we'll now need to get the
+list of clients to the socket handler. This is fairly straight-forward—we'll
+just add a parameter to the `handleSocket` function in `handle_socket.ts`:
+
+```ts
+// ...
+export async function handleSocket(
+	sock: WebSocket,
+	clients: Set<WebSocket>
+) {
+// ...
+```
+
+Then, we'll pass in the client `Set` in `server.ts`:
+
+```ts
+// ...
+clients.add(sock)
+handleSocket(sock, clients)
+// ...
+```
+
+Now that we have access to the client `Set`, we can iterate over it and send our
+messages out to all connected clients! Here's the completed `handle_socket.ts`
+code:
+
+```ts
+import {
+  WebSocket,
+  isWebSocketCloseEvent,
+  isWebSocketPingEvent,
+} from "https://deno.land/std/ws/mod.ts"
+
+export async function handleSocket(sock: WebSocket, clients: Set<WebSocket>) {
+  for await (const ev of sock) {
+    if (typeof ev === "string") {
+      // text message
+      console.log("ws:Text", ev)
+      for await (const client of clients) {
+        await client.send(ev)
+      }
+    } else if (ev instanceof Uint8Array) {
+      // binary message
+      console.log("ws:Binary", ev)
+    } else if (isWebSocketPingEvent(ev)) {
+      const [, body] = ev
+      // ping
+      console.log("ws:Ping", body)
+    } else if (isWebSocketCloseEvent(ev)) {
+      // close
+      const { code, reason } = ev
+      clients.delete(sock)
+      console.log("ws:Close", code, reason)
+    }
+  }
+}
+```
+
+> Note that we're only broadcasting when we receive text message events. That's
+> because that's what `wscat` sends, so It'll be easy to try out!
+
+> We need to make sure we remove our sockets from the `Set` once they
+> disconnect, or they'll never be able to reconnect! That's what we're doing in
+> the final `else if` block when we call `clients.delete(sock)`.
+
+And here's the completed `server.ts`:
+
+```ts
+import { serve } from "https://deno.land/std/http/server.ts"
+import { WebSocket, acceptWebSocket } from "https://deno.land/std/ws/mod.ts"
+
+import { handleSocket } from "./handle_socket.ts"
+
+const clients = new Set<WebSocket>()
+
+/** websocket echo server */
+const port = Deno.args[0] || "8080"
+console.log(`websocket server is running on :${port}`)
+for await (const req of serve(`:${port}`)) {
+  const { conn, r: bufReader, w: bufWriter, headers } = req
+
+  try {
+    const sock = await acceptWebSocket({
+      conn,
+      bufReader,
+      bufWriter,
+      headers,
+    })
+
+    clients.add(sock)
+    handleSocket(sock, clients)
+  } catch (err) {
+    console.error(`failed to accept websocket: ${err}`)
+    await req.respond({ status: 400 })
+  }
+}
+```
+
+Nice! We're on the home stretch.
+
+## Creating rooms
+
+All we need to do now is to allow groups of clients to communicate with each
+other. This means we'll need to create multiple Websocket `Set`s associated with
+string keys. In this simple example, we'll use the client's request URL to
+create different rooms, and we'll store each `Set` of clients in a `Map` data
+structure.
+
+Let's update our root `clients` variable in `server.ts` first:
+
+```ts
+// ...
+const clients = new Map<string, Set<WebSocket>>()
+// ...
+```
+
+Then, we'll get the connecting client's URL path out of the `req` variable in
+the request handler:
+
+```ts
+// ...
+const { conn, r: bufReader, w: bufWriter, headers, url } = req
+// ...
+```
+
+We will continue to add our `sock` reference to a `Set`, but we need to perform
+a little bit of logic to make sure we have a room to put them into:
+
+```ts
+// ...
+let room = clients.get(url)
+if (room) {
+  room.add(sock)
+} else {
+  room = new Set([sock])
+  clients.set(url, room)
+}
+handleSocket(sock, room)
+// ...
+```
+
+That's everything you need to do to add rooms to your Deno websocket server! We
+don't need to make any adjustments to `handle_socket.ts` because we've already
+abstracted it to broadcast to a given `Set` of clients. Here's the final
+`server.ts` code:
+
+```ts
+import { serve } from "https://deno.land/std/http/server.ts"
+import { WebSocket, acceptWebSocket } from "https://deno.land/std/ws/mod.ts"
+
+import { handleSocket } from "./handle_socket.ts"
+
+const clients = new Map<string, Set<WebSocket>>()
+
+/** websocket echo server */
+const port = Deno.args[0] || "8080"
+console.log(`websocket server is running on :${port}`)
+for await (const req of serve(`:${port}`)) {
+  const { conn, r: bufReader, w: bufWriter, headers, url } = req
+
+  try {
+    const sock = await acceptWebSocket({
+      conn,
+      bufReader,
+      bufWriter,
+      headers,
+    })
+
+    let room = clients.get(url)
+    if (room) {
+      room.add(sock)
+    } else {
+      room = new Set([sock])
+      clients.set(url, room)
+    }
+    handleSocket(sock, room)
+  } catch (err) {
+    console.error(`failed to accept websocket: ${err}`)
+    await req.respond({ status: 400 })
+  }
+}
+```
+
+To test out these changes, open a handful of terminals. In a couple of them,
+execute `wscat -c ws://localhost:8080` like we've done so far. In the rest of
+them run `wscat -c ws://localhost:8080/test`. Now, send some messages in each
+terminal, and see how you have two separate broadcasting groups!
+
+---
+
+I was quite surprised when I found that the example `ws` server wouldn't handle
+multiple clients, but I'm happy that the solution was easy enough. I hope this
+article is useful for others who stumble into the same issue.
+
+If you find any mistakes I made, please reach out to me on
+[Twitter @puregarlic\_](https://twitter.com/puregarlic_) so I can correct or
+clarify them.
+
+Good luck with your own Deno endeavors!
