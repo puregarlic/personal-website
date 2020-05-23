@@ -81,7 +81,7 @@ export default function PostLayout({ data: { mdx }, location }) {
           sx={{ gridArea: "toc" }}
         >
           <TableOfContents
-            slug={mdx.fields.slug}
+            slug={mdx.fields.slug.substring(0, mdx.fields.slug.length - 1)}
             items={mdx.tableOfContents.items}
           />
         </Flex>
